@@ -1115,17 +1115,16 @@ body {
   }
 
   #home {
-    min-height: 100svh; 
+    min-height: 100svh;              /* fills first screen on iOS properly */
   }
 
   .home-container {
-    height: auto;
-    min-height: calc(100svh - 3rem);
+    height: calc(100svh - 3rem);     /* 3rem = your mobile navbar height */
     overflow: hidden;
     flex-direction: column-reverse;
-    padding: 4rem 1rem 2rem 1rem;
-    gap: 0.5rem;
-    justify-content: flex-end;
+    padding: 5.5rem 1rem 1rem 1rem;
+    height: auto;
+    gap: 0rem;
   }
 
   .home-left-side,
@@ -1135,10 +1134,6 @@ body {
     align-items: center;
   }
 
-  .home-right-side {
-    margin-top: 4rem; 
-    margin-bottom: 0;
-  }
 
   .orbit-wrapper {
     position: relative;
