@@ -3,49 +3,95 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+
+    <!-- Favicons -->
+    <link rel="icon" href="favicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <link rel="apple-touch-icon" href="favicon/apple-touch-icon.png">
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      integrity="sha384-/o6I2CkkWC//PSjvWC/eYN7l3xM3tJm8ZzVkCOfp//W05QcE3mlGskpoHB6XqI+B"
+      crossorigin="anonymous"
+    />
+
     <title>Tarek Hasan</title>
     <link rel="stylesheet" href="style.css" />
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"
+      integrity="sha384-NMn9+T8zIKnDUstqb5le7vdLNSyAgSU9DtEPT/b7ks9NJQpPk4Dc9b1tI8oyzimc"
+      crossorigin="anonymous"
+      defer
+    ></script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/p5@1.6.0/lib/p5.min.js"></script> -->
   </head>
   <body>
     <div id="intro-overlay">
-      <div class="hello-shuffle"></div><span class="wave-hand">👋</span>
+      <div class="hello-shuffle"></div>
+      <span class="wave-hand">👋</span>
     </div>
 
+    <canvas id="starfield"></canvas>
+    <div class="home-glass-layer"></div>
 
     <!-- NAVBAR -->
     <nav class="navbar">
       <div class="container">
         <div class="navbar-left">
           <span class="navbar-brand">
-            <a href="#"><span class="highlight-brand-letter">T</span>arek Hasan</a></span>
+            <a href="#"
+              ><span class="highlight-brand-letter">T</span>arek Hasan</a
+            ></span
+          >
           <ul class="navbar-menu">
             <li><a href="#">Home</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#experience">Experience</a></li>
             <li><a href="#projects">Projects</a></li>
-            <li><a href="#">Blog</a></li>
+            <!-- <li><a href="#">Blog</a></li> -->
           </ul>
         </div>
         <div class="navbar-right">
           <ul class="navbar-logo">
             <li>
-              <a href="https://github.com/tarek-hasan33" target="_blank"><i class="fab fa-github"></i
+              <a
+                href="https://github.com/tarek-hasan33"
+                target="_blank"
+                rel="noopener noreferrer"
+                ><i class="fab fa-github"></i
               ></a>
             </li>
             <li>
-              <a href="https://www.linkedin.com/in/tarek-hasan33/" target="_blank"><i class="fa-brands fa-linkedin"></i
+              <a
+                href="https://www.linkedin.com/in/tarek-hasan33/"
+                target="_blank"
+                rel="noopener noreferrer"
+                ><i class="fa-brands fa-linkedin"></i
               ></a>
             </li>
             <li>
-              <a href="#" onclick="openEmail('t.r.hasan33@gmail.com')" target="_blank"><i class="fas fa-envelope"></i
-              ></a>
+              <a
+                href="mailto:t.r.hasan33@gmail.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <i class="fas fa-envelope"></i>
+              </a>
             </li>
             <li>
-              <a href="https://medium.com/@t.r.hasan33" target="_blank"><i class="fa-regular fa-pen-to-square"></i></a>
+              <a
+                href="https://medium.com/@t.r.hasan33"
+                target="_blank"
+                rel="noopener noreferrer"
+                ><i class="fa-regular fa-pen-to-square"></i
+              ></a>
             </li>
           </ul>
         </div>
@@ -63,53 +109,75 @@
               <div class="intro">
                 <h1>
                   hey,
-                  <span class="typed-text"></span><span class="blinking-cursor">|</span>
+                  <span class="typed-text"></span
+                  ><span class="blinking-cursor">|</span>
                 </h1>
               </div>
               <span class="intro-subheading">
                 <!-- Becoming something slowly -->
                 Learning, Exploring, Creating
-
-
               </span>
               <div class="intro-description">
                 <p>
-                  I’m a CS student from Dhaka, Bangladesh, interested in AI and Cybersecurity. 
-                  Still figuring things out, building what I can, and hoping to contribute 
-                  along the way.
+                  I’m a CS student from Dhaka, Bangladesh, interested in AI and
+                  Cybersecurity. Still figuring things out, building what I can,
+                  and hoping to contribute along the way.
                 </p>
               </div>
               <div class="home-btns">
-                <a href="#" class="btn">Resume</a>
-                <a href="#" onclick="openEmail('t.r.hasan33@gmail.com')" class="home-mail"
-                  ><i class="fas fa-envelope"></i> Hello!</a>
+                <a
+                  href="files/resume/Resume_TarekHasan.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn"
+                >
+                  Resume
+                </a>
+
+                <a
+                  href="mailto:t.r.hasan33@gmail.com?subject=Portfolio%20Inquiry&body=Hi%20Tarek%2C%0A%0AI%20came%20across%20your%20portfolio%20and%20would%20like%20to%20connect."
+                  class="home-mail"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <i class="fas fa-envelope"></i> Hello!
+                </a>
               </div>
             </div>
             <div class="home-right-side">
               <!-- <div class="sketch-holder"></div> -->
-               <div class="orbit-wrapper">
+              <div class="orbit-wrapper">
                 <div class="orbit-circle outer-orbit"></div>
                 <div class="icon-rotator outer-rotator">
-                  <div class="orbit-icon"><img src="/orbitIcons/react.svg" alt="icon1"></div>
-                  <div class="orbit-icon"><img src="/orbitIcons/nodedotjs.svg" alt="icon2"></div>
-                  <div class="orbit-icon"><img src="/orbitIcons/python.svg" alt="icon3"></div>
-                  <div class="orbit-icon"><img src="/orbitIcons/cplusplus2.svg" alt="icon4"></div>
+                  <div class="orbit-icon">
+                    <img src="images/orbitIcons/react.svg" alt="icon1" />
+                  </div>
+                  <div class="orbit-icon">
+                    <img src="images/orbitIcons/nodedotjs.svg" alt="icon2" />
+                  </div>
+                  <div class="orbit-icon">
+                    <img src="images/orbitIcons/python.svg" alt="icon3" />
+                  </div>
+                  <div class="orbit-icon">
+                    <img src="images/orbitIcons/cplusplus.svg" alt="icon4" />
+                  </div>
                 </div>
-                
+
                 <div class="orbit-circle inner-orbit"></div>
                 <div class="icon-rotator inner-rotator">
-                  <div class="orbit-icon"><img src="/orbitIcons/github2.svg" alt="icon5"></div>
-                  <div class="orbit-icon"><img src="/orbitIcons/C.svg" alt="icon6"></div>
+                  <div class="orbit-icon">
+                    <img src="images/orbitIcons/github.svg" alt="icon5" />
+                  </div>
+                  <div class="orbit-icon">
+                    <img src="images/orbitIcons/C.svg" alt="icon6" />
+                  </div>
                 </div>
-               </div>
-               
-
+              </div>
             </div>
           </div>
         </div>
-        
       </div>
-      
+
       <!-- HOME PAGE ENDS HERE-->
 
       <!-- About Section Starts Here-->
@@ -117,18 +185,35 @@
         <div class="container">
           <div class="fade-in-section about-container">
             <div class="page-header">
-              <span class="page-title"><span class="special-ch">|</span> about me</span>
+              <span class="page-title"
+                ><span class="special-ch">|</span> about me</span
+              >
             </div>
             <div class="about-content">
               <div class="about-left-side">
                 <p class="about-first-paragraph">
-                  I'm a <b>Computer Science</b> undergrad at
-                  <a href="https://www.uiu.ac.bd/about-uiu/" target="_blank">United International University</a>, 
-                  working as a user advocate at <a href="https://www.minutei.com" target="_blank">Minutei</a>, the first 
-                  tech-based quick commerce platform in Bangladesh, while actively contributing to its overall product development. 
-                  I'm also a Research Assistant at <a href="https://amirl.org/" target="_blank">AMIR Lab</a>,
-                  focusing on Explainable AI, NLP models, and LLM hallucinations.  
+                  I’m a <strong>Computer Science</strong> undergraduate at
+                  <a
+                    href="https://www.uiu.ac.bd/about-uiu/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >United International University</a
+                  >, currently working part-time as a Tech Team member at
+                  <a
+                    href="https://www.minutei.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Minutei</a
+                  >, where I contribute to product development. I’m also a
+                  Research Assistant at
+                  <a
+                    href="https://amirl.org/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >AMIR Lab</a
+                  >, focusing on Explainable AI, NLP, and LLM hallucinations.
                 </p>
+
                 <p>Know more about my skillsets and educational background:</p>
                 <div class="tabs-container">
                   <div class="tab-buttons">
@@ -146,7 +231,9 @@
                         <ul class="skills-column">
                           <li><span class="skill-item">Java</span></li>
                           <li><span class="skill-item">C++</span></li>
-                          <li><span class="skill-item">JavaScript ES6+</span></li>
+                          <li>
+                            <span class="skill-item">JavaScript ES6+</span>
+                          </li>
                         </ul>
                         <ul class="skills-column">
                           <li><span class="skill-item">Git</span></li>
@@ -159,23 +246,30 @@
                       <div class="content-title">
                         BSc in Computer Science and Engineering
                         <span class="special-ch"
-                          >@United International University</span>
+                          >@United International University</span
+                        >
                       </div>
                       <div class="content-duration">OCT 2022 - ONGOING</div>
                       <div class="content-description">
                         <p>
-                          Pursuing a Bachelor's degree in Computer Science and Engineering 
-                          with a focus on core areas such as Data Structures and Algorithms, 
-                          Database Systems, Computer Security, Networks, AI & ML.
+                          Bachelor’s student in Computer Science and Engineering
+                          with a focus on Data Structures, Databases, Networks,
+                          Security, and AI/ML.
                         </p>
                       </div>
                     </div>
                   </div>
                 </div>
                 <p class="about-last-paragraph">
-                  When I’m not deep into studies or building personal projects, I love watching 
-                  football and Formula 1, diving into video games, and getting lost in 
-                  <b><a href="https://tarekhasan.notion.site/Book-Collection-468100d225c34803bc707d3ef9cbb29c" target="_blank">books</a></b>—especially ones on productivity or with a gripping story.
+                  Outside of studies and personal projects, I love football,
+                  Formula 1, video games, and getting lost in
+                  <a
+                    href="https://tarekhasan.notion.site/Book-Collection-468100d225c34803bc707d3ef9cbb29c"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    books.
+                  </a>
                 </p>
               </div>
 
@@ -191,181 +285,201 @@
       <!-- Experience Section Starts Here -->
       <div id="experience">
         <div class="container">
-          <div class="fade-in-section experince-container">
+          <div class="fade-in-section experience-container">
             <div class="page-header">
-              <span class="page-title"><span class="special-ch">|</span> experience</span>
+              <span class="page-title"
+                ><span class="special-ch">|</span> experience</span
+              >
             </div>
           </div>
           <div class="experience-content">
             <div class="tabs-container">
-                  <div class="tab-buttons">
-                    <button class="tab-button active" data-tab="minutei">
-                      MINUTEI
-                    </button>
-                    <button class="tab-button" data-tab="amirlab">
-                      AMIR LAB
-                    </button>
-                    <div class="tab-indicator"></div>
+              <div class="tab-buttons">
+                <button class="tab-button active" data-tab="minutei">
+                  MINUTEI
+                </button>
+                <button class="tab-button" data-tab="amirlab">AMIR LAB</button>
+                <div class="tab-indicator"></div>
+              </div>
+              <div class="fade-in-section tab-content">
+                <div class="tab-panel active">
+                  <div class="content-title">
+                    Tech Team Member (Part-time)
+                    <span class="special-ch">@Minutei</span>
                   </div>
-                  <div class="fade-in-section tab-content">
-                    <div class="tab-panel active">
-                      <div class="content-title">
-                        User Advocate Intern
-                        <span class="special-ch"
-                          >@Minutei</span>
-                      </div>
-                      <div class="content-duration">MAY 2025 - ONGOING</div>
-                      <div class="content-description">
-                        <p>
-                          Serving as a User Advocate Intern at Minutei, with a primary focus on user interaction, including 
-                          community moderation and handling feedback to help improve the 
-                          overall user experience.
-                        </p>
-                        <p>
-                          Contributing to the content and marketing 
-                          teams by sharing campaign ideas, suggesting marketing strategies, 
-                          and helping develop content tailored to our audience and brand.
-                        </p>
-                        <p>
-                          Actively involved in the development process of our platform, 
-                          <b>minutei.com</b>, assisting with quality assurance and ensuring that the 
-                          site functions smoothly and aligns with user needs.
-                        </p>
-                        
-                    </div>
-                    </div>
-                    
-                    <div class="tab-panel">
-                      <div class="content-title">
-                        Research Assistant
-                        <span class="special-ch"
-                          >@Advanced Machine Intelligence Research Lab</span>
-                      </div>
-                      
-                      <div class="content-duration">FEBRUARY 2025 - ONGOING</div>
-                      <div class="content-description">
-                        <p>
-                          Currently researching NLP with a focus on LLM 
-                          hallucinations, exploring why they occur and how to reduce them. 
-                          Investigating the behavior of large language models to improve output 
-                          reliability and factual consistency.
-                        </p>
-                        <p>
-                          Working on AI transparency through Explainable AI. Developing 
-                          methods to make model decisions more interpretable and co-authoring 
-                          a research paper on these topics with my team.
-                        </p>
-                      </div>
-                    </div>
+                  <div class="content-duration">MAY 2025 - ONGOING</div>
+                  <div class="content-description">
+                    <p>
+                      Working as a part-time Tech Team Member at Minutei,
+                      contributing directly to product development by supporting
+                      feature implementation, testing, and iterative
+                      improvements across the platform.
+                    </p>
+                    <p>
+                      Actively involved in the development lifecycle,
+                      collaborating with product and cross-functional teams to
+                      refine requirements, resolve technical issues, and enhance
+                      user-facing functionality.
+                    </p>
+                    <p>
+                      Assisting with quality assurance, deployment checks, and
+                      ongoing maintenance of <b>minutei.com</b>, helping ensure
+                      stable releases and a smooth, user-focused product
+                      experience.
+                    </p>
                   </div>
                 </div>
-          </div>
-        </div>
-       </div>
-       <!-- Experience Section Ends Here -->
 
-       <!-- Project Section Starts Here -->
-        <div id="projects">
-          <div class="container">
-            <div class="fade-in-section projects-container">
-              <div class="page-header">
-                <span class="page-title"><span class="special-ch">|</span> projects</span>
-              </div>
-            </div>
-            <div class="projects-content">
-              <div class="fade-in-section cards">
-                <div class="card-icons">
-                  <div class="left-card-icon">
-                    <i class="fa-solid fa-diagram-project"></i>
+                <div class="tab-panel">
+                  <div class="content-title">
+                    Research Assistant
+                    <span class="special-ch"
+                      >@Advanced Machine Intelligence Research Lab</span
+                    >
                   </div>
-                  <div class="right-card-icon">
-                    <a href="https://github.com/tarek-hasan33/Personal_Portfolio"><i class="fa-brands fa-github"></i></a>
+
+                  <div class="content-duration">FEBRUARY 2025 - ONGOING</div>
+                  <div class="content-description">
+                    <p>
+                      Currently researching NLP with a focus on LLM
+                      hallucinations, exploring why they occur and how to reduce
+                      them. Investigating the behavior of large language models
+                      to improve output reliability and factual consistency.
+                    </p>
+                    <p>
+                      Working on AI transparency through Explainable AI.
+                      Developing methods to make model decisions more
+                      interpretable and co-authoring a research paper on these
+                      topics with my team.
+                    </p>
                   </div>
-                </div>
-                <div class="project-images">
-                  <img src="/images/project_images/portfolio/1.png" alt="img1">
-                  <img src="/images/project_images/portfolio/2.png" alt="img2">
-                  <img src="/images/project_images/portfolio/3.png" alt="img3">
-                  <div class="image-nav left-arrow">
-                    <i class="fa-solid fa-chevron-left"></i>
-                  </div>
-                  <div class="image-nav right-arrow">
-                    <i class="fa-solid fa-chevron-right"></i>
-                  </div>
-                </div>
-                
-                <h2>Personal Portfolio</h2>
-                <p>
-                  A minimalistic personal portfolio site to share my journey, projects, and regular blogs.
-                </p>
-                <div class="tech-stack">
-                  <span>HTML</span>
-                  <span>CSS</span>
-                  <span>JavaScript</span>
-                </div>
-              </div>
-              <div class="fade-in-section cards">
-                <div class="card-icons">
-                  <div class="left-card-icon">
-                    <i class="fa-solid fa-diagram-project"></i>
-                  </div>
-                  <div class="right-card-icon">
-                    <a href="https://github.com/tarek-hasan33/Personal_Portfolio"><i class="fa-brands fa-github"></i></a>
-                  </div>
-                </div>
-                <div class="project-images">
-                  <img src="/images/project_images/comingSoon/comingSoon.jpg" alt="img1">
-                  <div class="image-nav left-arrow">
-                    <i class="fa-solid fa-chevron-left"></i>
-                  </div>
-                  <div class="image-nav right-arrow">
-                    <i class="fa-solid fa-chevron-right"></i>
-                  </div>
-                </div>
-                <h2>Coming Soon</h2>
-                <p>
-                  Will add new projects I’m working on after finishing them.
-                </p>
-                <div class="tech-stack">
-                  <span>Demo Stack</span>
-                </div>
-              </div>
-              <div class="fade-in-section cards">
-                <div class="card-icons">
-                  <div class="left-card-icon">
-                    <i class="fa-solid fa-diagram-project"></i>
-                  </div>
-                  <div class="right-card-icon">
-                    <a href="https://github.com/tarek-hasan33/Personal_Portfolio"><i class="fa-brands fa-github"></i></a>
-                  </div>
-                </div>
-                <div class="project-images">
-                  <img src="/images/project_images/comingSoon/comingSoon.jpg" alt="img1">
-                  <div class="image-nav left-arrow">
-                    <i class="fa-solid fa-chevron-left"></i>
-                  </div>
-                  <div class="image-nav right-arrow">
-                    <i class="fa-solid fa-chevron-right"></i>
-                  </div>
-                </div>
-                <h2>Coming Soon</h2>
-                <p>
-                  Will add new projects I’m working on after finishing them.
-                </p>
-                <div class="tech-stack">
-                  <span>Demo Stack</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
+      <!-- Experience Section Ends Here -->
 
-        <div id="footer">
-          <div class="fade-in-section credits">
-            <div>Built and designed by Tarek Hasan</div>
-            <div>All rights reserved. &copy</div>
+      <!-- Project Section Starts Here -->
+      <div id="projects">
+        <div class="container">
+          <div class="fade-in-section projects-container">
+            <div class="page-header">
+              <span class="page-title"
+                ><span class="special-ch">|</span> projects</span
+              >
+            </div>
+          </div>
+          <div class="projects-content">
+            <div class="fade-in-section cards">
+              <div class="card-icons">
+                <div class="left-card-icon">
+                  <i class="fa-solid fa-diagram-project"></i>
+                </div>
+                <div class="right-card-icon">
+                  <a href="https://github.com/tarek-hasan33/Personal_Portfolio"
+                    ><i class="fa-brands fa-github"></i
+                  ></a>
+                </div>
+              </div>
+              <div class="project-images">
+                <img src="images/project_images/portfolio/1.png" alt="img1" />
+                <img src="images/project_images/portfolio/2.png" alt="img2" />
+                <img src="images/project_images/portfolio/3.png" alt="img3" />
+                <div class="image-nav left-arrow">
+                  <i class="fa-solid fa-chevron-left"></i>
+                </div>
+                <div class="image-nav right-arrow">
+                  <i class="fa-solid fa-chevron-right"></i>
+                </div>
+              </div>
+
+              <h2>Personal Portfolio</h2>
+              <p>
+                A minimalistic personal portfolio site to share my journey,
+                projects, and regular blogs.
+              </p>
+              <div class="tech-stack">
+                <span>HTML</span>
+                <span>CSS</span>
+                <span>JavaScript</span>
+              </div>
+            </div>
+            <div class="fade-in-section cards">
+              <div class="card-icons">
+                <div class="left-card-icon">
+                  <i class="fa-solid fa-diagram-project"></i>
+                </div>
+                <div class="right-card-icon">
+                  <a href="https://github.com/tarek-hasan33/Personal_Portfolio"
+                    ><i class="fa-brands fa-github"></i
+                  ></a>
+                </div>
+              </div>
+              <div class="project-images">
+                <img
+                  src="/images/project_images/comingSoon/comingSoon.jpg"
+                  alt="img1"
+                />
+                <div class="image-nav left-arrow">
+                  <i class="fa-solid fa-chevron-left"></i>
+                </div>
+                <div class="image-nav right-arrow">
+                  <i class="fa-solid fa-chevron-right"></i>
+                </div>
+              </div>
+              <h2>Coming Soon</h2>
+              <p>
+                Will add new projects I’m working on after finishing them.
+                Keeping this card here just for the visual.
+              </p>
+              <div class="tech-stack">
+                <span>Demo Stack</span>
+              </div>
+            </div>
+            <div class="fade-in-section cards">
+              <div class="card-icons">
+                <div class="left-card-icon">
+                  <i class="fa-solid fa-diagram-project"></i>
+                </div>
+                <div class="right-card-icon">
+                  <a href="https://github.com/tarek-hasan33/Personal_Portfolio"
+                    ><i class="fa-brands fa-github"></i
+                  ></a>
+                </div>
+              </div>
+              <div class="project-images">
+                <img
+                  src="/images/project_images/comingSoon/comingSoon.jpg"
+                  alt="img1"
+                />
+                <div class="image-nav left-arrow">
+                  <i class="fa-solid fa-chevron-left"></i>
+                </div>
+                <div class="image-nav right-arrow">
+                  <i class="fa-solid fa-chevron-right"></i>
+                </div>
+              </div>
+              <h2>Coming Soon</h2>
+              <p>
+                Will add new projects I’m working on after finishing them.
+                Keeping this card here just for the visual.
+              </p>
+              <div class="tech-stack">
+                <span>Demo Stack</span>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
+
+      <div id="footer">
+        <div class="fade-in-section credits">
+          <div>Built and designed by Tarek Hasan</div>
+          <div>All rights reserved. &copy</div>
+        </div>
+      </div>
     </div>
 
     <div id="image-popup" class="hidden">
@@ -374,13 +488,15 @@
         <div class="image-nav left-arrow">
           <i class="fa-solid fa-chevron-left"></i>
         </div>
-        <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="Popup Image" />
+        <img
+          src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
+          alt="Popup Image"
+        />
         <div class="image-nav right-arrow">
           <i class="fa-solid fa-chevron-right"></i>
         </div>
       </div>
     </div>
-    
 
     <script src="main.js"></script>
   </body>

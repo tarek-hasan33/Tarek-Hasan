@@ -14,7 +14,9 @@ document.addEventListener("DOMContentLoaded", function () {
     "سلام",
   ];
   const overlay = document.getElementById("intro-overlay");
+  if (!overlay) return;
   const helloShuffle = overlay.querySelector(".hello-shuffle");
+  if (!helloShuffle) return;
 
   let greetIndex = 0;
   const shuffleInterval = setInterval(() => {
@@ -32,15 +34,370 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 300);
   }, 1800);
 
+  (function initStarfieldOptimized() {
+    const canvas = document.getElementById("starfield");
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d", { alpha: true });
+
+    const rocketImg = new Image();
+    rocketImg.src = "images/rocket/rocket.svg";
+
+    // Offscreen cache for static stars
+    const starCache = document.createElement("canvas");
+    const sctx = starCache.getContext("2d", { alpha: true });
+
+    let w = 0,
+      h = 0,
+      dpr = 1;
+
+    // Performance knobs
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const STAR_COUNT = isMobile ? 900 : 1400; // lower on mobile
+    const GLOW_RATIO = isMobile ? 0.05 : 0.07; // few glowy ones
+    const MAX_SHOOTING = isMobile ? 1 : 2; // cap simultaneous streaks
+    const TARGET_FPS = 30; // stars don’t need 60fps
+    const FRAME_TIME = 1000 / TARGET_FPS;
+
+    const stars = [];
+    const shooting = [];
+    let lastFrame = 0;
+    let running = true;
+    const rockets = [];
+    const smoke = [];
+
+    function rand(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 1.25);
+      w = window.innerWidth;
+      h = window.innerHeight;
+
+      canvas.width = Math.floor(w * dpr);
+      canvas.height = Math.floor(h * dpr);
+      canvas.style.width = w + "px";
+      canvas.style.height = h + "px";
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      starCache.width = Math.floor(w * dpr);
+      starCache.height = Math.floor(h * dpr);
+      sctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      buildStars();
+      renderStarCache(); // draw static stars once
+    }
+
+    function buildStars() {
+      stars.length = 0;
+      for (let i = 0; i < STAR_COUNT; i++) {
+        const glow = Math.random() < GLOW_RATIO;
+        stars.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          r: glow ? rand(0.6, 1.2) : rand(0.3, 0.9), // tiny dots
+          a: glow ? rand(0.25, 0.85) : rand(0.12, 0.55),
+          glow,
+        });
+      }
+    }
+
+    function renderStarCache() {
+      sctx.clearRect(0, 0, w, h);
+
+      // subtle depth tint
+      const bg = sctx.createRadialGradient(
+        w * 0.5,
+        h * 0.2,
+        20,
+        w * 0.5,
+        h * 0.2,
+        Math.max(w, h)
+      );
+      bg.addColorStop(0, "rgba(203, 214, 226, 0.03)");
+      bg.addColorStop(1, "rgba(1, 22, 39, 0)");
+      sctx.fillStyle = bg;
+      sctx.fillRect(0, 0, w, h);
+
+      for (const s of stars) {
+        if (s.glow) {
+          sctx.shadowBlur = 6;
+          sctx.shadowColor = "rgba(46, 196, 182, 0.20)";
+        } else {
+          sctx.shadowBlur = 0;
+        }
+        sctx.fillStyle = `rgba(203, 214, 226, ${s.a})`;
+        sctx.fillRect(s.x, s.y, s.r, s.r);
+      }
+      sctx.shadowBlur = 0;
+    }
+
+    function spawnShootingStar() {
+      if (shooting.length >= MAX_SHOOTING) return;
+
+      // Choose spawn edge
+      const r = Math.random();
+      let startX, startY, angle;
+
+      if (r < 0.55) {
+        // TOP (same idea as before)
+        startX = rand(0, w);
+        startY = -60;
+
+        // Mostly downward with small left/right variance
+        angle = rand(Math.PI * 0.35, Math.PI * 0.65);
+      } else if (r < 0.775) {
+        // LEFT
+        startX = -60;
+        startY = rand(0, h); // full height for better spread
+
+        // Aim to the right-ish (inward)
+        angle = rand(-Math.PI * 0.15, Math.PI * 0.15);
+      } else {
+        // RIGHT
+        startX = w + 60;
+        startY = rand(0, h); // full height for better spread
+
+        // Aim to the left-ish (inward)
+        angle = rand(Math.PI - Math.PI * 0.15, Math.PI + Math.PI * 0.15);
+      }
+
+      // Slightly slower (adjust to taste)
+      const speed = rand(isMobile ? 8 : 10, isMobile ? 14 : 18);
+
+      shooting.push({
+        x: startX,
+        y: startY,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        life: 0,
+        maxLife: rand(35, 75),
+        len: rand(110, 220),
+        w: rand(0.8, 1.4),
+      });
+    }
+
+    function spawnRocket() {
+      if (rockets.length >= 1) return; // only one at a time
+
+      // spawn from random edge
+      const edge = Math.floor(Math.random() * 4);
+      let x, y;
+
+      if (edge === 0) {
+        x = Math.random() * w;
+        y = -60;
+      }
+      if (edge === 1) {
+        x = w + 60;
+        y = Math.random() * h;
+      }
+      if (edge === 2) {
+        x = Math.random() * w;
+        y = h + 60;
+      }
+      if (edge === 3) {
+        x = -60;
+        y = Math.random() * h;
+      }
+
+      const targetX = Math.random() * w;
+      const targetY = Math.random() * h;
+
+      const dx = targetX - x;
+      const dy = targetY - y;
+      const mag = Math.hypot(dx, dy) || 1;
+
+      const speed = 3;
+      const diagonal = Math.hypot(w, h);
+
+      rockets.push({
+        x,
+        y,
+        vx: (dx / mag) * speed,
+        vy: (dy / mag) * speed,
+        angle: Math.atan2(dy, dx), // movement direction
+        life: 0,
+        maxLife: 1000,
+      });
+    }
+
+    // Rare rocket spawns (random)
+    setInterval(() => {
+      if (!running) return;
+      if (Math.random() < 0.4) spawnRocket(); // 20% chance every 5s = ~25s average
+    }, 5000);
+
+    function emitSmoke(x, y, vx, vy) {
+      for (let i = 0; i < 3; i++) {
+        smoke.push({
+          x: x + (Math.random() - 0.5) * 4,
+          y: y + (Math.random() - 0.5) * 4,
+          vx: -vx * 0.15 + (Math.random() - 0.5) * 0.4,
+          vy: -vy * 0.15 + (Math.random() - 0.5) * 0.4,
+          r: Math.random() * 2 + 1,
+          a: 0.15,
+          life: 0,
+          maxLife: 50,
+        });
+      }
+
+      if (smoke.length > 400) smoke.splice(0, smoke.length - 400);
+    }
+
+    function drawRocket(r) {
+      const size = 28; // small & subtle
+
+      ctx.save();
+      ctx.translate(r.x, r.y);
+      ctx.rotate(r.angle + Math.PI / 2); // <-- key line
+      ctx.globalAlpha = 0.85;
+
+      ctx.drawImage(rocketImg, -size / 2, -size / 2, size, size);
+
+      ctx.restore();
+      ctx.globalAlpha = 1;
+    }
+
+    // Not too frequent
+    setInterval(() => {
+      if (!running) return;
+      if (Math.random() < (isMobile ? 0.35 : 0.5)) spawnShootingStar();
+    }, 1100);
+
+    // Pause only when tab is hidden (NOT when scrolling)
+    function onVisibility() {
+      running = !document.hidden;
+    }
+    document.addEventListener("visibilitychange", onVisibility);
+    running = !document.hidden;
+
+    function draw(ts) {
+      requestAnimationFrame(draw);
+      if (!running) return;
+
+      if (ts - lastFrame < FRAME_TIME) return; // throttle to ~30fps
+      lastFrame = ts;
+
+      // draw cached star background
+      ctx.clearRect(0, 0, w, h);
+      ctx.drawImage(starCache, 0, 0, w, h);
+
+      // shooting stars
+      for (let i = shooting.length - 1; i >= 0; i--) {
+        const sh = shooting[i];
+        sh.x += sh.vx;
+        sh.y += sh.vy;
+        sh.life++;
+
+        const t = sh.life / sh.maxLife;
+        const alpha = 1 - t;
+
+        const tailX = sh.x - sh.vx * (sh.len / 22);
+        const tailY = sh.y - sh.vy * (sh.len / 22);
+
+        const grad = ctx.createLinearGradient(sh.x, sh.y, tailX, tailY);
+        grad.addColorStop(0, `rgba(46, 196, 182, ${0.75 * alpha})`);
+        grad.addColorStop(0.55, `rgba(203, 214, 226, ${0.28 * alpha})`);
+        grad.addColorStop(1, `rgba(203, 214, 226, 0)`);
+
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = sh.w;
+        ctx.beginPath();
+        ctx.moveTo(sh.x, sh.y);
+        ctx.lineTo(tailX, tailY);
+        ctx.stroke();
+
+        if (
+          sh.life >= sh.maxLife ||
+          sh.x < -400 ||
+          sh.x > w + 400 ||
+          sh.y < -400 ||
+          sh.y > h + 400
+        ) {
+          shooting.splice(i, 1);
+        }
+      }
+
+
+      // ---- rockets update + smoke ----
+      for (let i = rockets.length - 1; i >= 0; i--) {
+        const r = rockets[i];
+        r.x += r.vx;
+        r.y += r.vy;
+        r.life++;
+
+        // smoke comes from behind rocket
+        emitSmoke(
+          r.x - Math.cos(r.angle) * 14,
+          r.y - Math.sin(r.angle) * 14,
+          r.vx,
+          r.vy
+        );
+
+        if (
+          r.life > r.maxLife ||
+          r.x < -200 ||
+          r.x > w + 200 ||
+          r.y < -200 ||
+          r.y > h + 200
+        ) {
+          rockets.splice(i, 1);
+        }
+      }
+
+      // ---- smoke draw ----
+      for (let i = smoke.length - 1; i >= 0; i--) {
+        const p = smoke[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.life++;
+
+        const t = p.life / p.maxLife;
+        ctx.globalAlpha = p.a * (1 - t);
+        ctx.fillStyle = "rgba(203,214,226,0.6)";
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r + t * 2, 0, Math.PI * 2);
+        ctx.fill();
+
+        if (p.life >= p.maxLife) smoke.splice(i, 1);
+      }
+      ctx.globalAlpha = 1;
+
+      // ---- rocket draw ----
+      for (const r of rockets) drawRocket(r);
+    }
+
+    function debounce(fn, wait = 150) {
+      let t;
+      return (...args) => {
+        clearTimeout(t);
+        t = setTimeout(() => fn(...args), wait);
+      };
+    }
+
+    resize();
+    window.addEventListener(
+      "resize",
+      debounce(() => {
+        resize();
+      }, 150)
+    );
+
+    requestAnimationFrame(draw);
+  })();
+
   // MAIN ANIMATION
   function initMainAnimations() {
     //Typed.js
-    new Typed(".typed-text", {
-      strings: [" <span class='intro-name'>tarek</span> here."],
-      typeSpeed: 60,
-      showCursor: false,
-      contentType: "html",
-    });
+    if (window.Typed) {
+      new Typed(".typed-text", {
+        strings: [" <span class='intro-name'>tarek</span> here."],
+        typeSpeed: 60,
+        showCursor: false,
+        contentType: "html",
+      });
+    }
 
     //Fade-in on scroll
     const fadeSections = document.querySelectorAll(".fade-in-section");
@@ -62,20 +419,6 @@ document.addEventListener("DOMContentLoaded", function () {
       section.classList.remove("active");
       observer.observe(section);
     });
-
-
-    // openEmail function
-    window.openEmail = function(email) {
-      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-      if (isMobile) {
-        window.location.href = `mailto:${email}`;
-      } else {
-        window.open(
-          `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}`,
-          "_blank"
-        );
-      }
-    };
 
     //Tabbed content
     const tabContainers = document.querySelectorAll(".tabs-container");
