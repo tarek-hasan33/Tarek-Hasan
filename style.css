@@ -1,1343 +1,503 @@
-:root {
-  --bg-color: #011627;
-  --bg-color-slightlight: #022039;
-  --text-primary: #cbd6e2;
-  --text-lightest-primary: rgba(203, 214, 226, 0.2);
-  --text-lightest-primary-slightly: rgba(203, 214, 226, 0.6);
-  --text-secondary: #2ec4b6;
-  --text-lightest-secondary: rgba(46, 196, 182, 0.4);
-  --text-lightest-secondary-slightly: rgba(46, 196, 182, 0.6);
-  --glass-texture: rgba(255, 255, 255, 0.05);
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  font-family: "Space Grotesk", sans-serif;
-  box-sizing: border-box;
-}
-
-html,
-body {
-  background: var(--bg-color);
-  color: var(--text-primary);
-  max-width: 100%;
-  overflow-x: hidden;
-  scroll-behavior: smooth;
-}
-
-::selection {
-  background: var(--text-lightest-secondary);
-}
-
-.container {
-  width: 100%;
-  max-width: 75rem;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
-#starfield {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.navbar,
-#content,
-#intro-overlay {
-  position: relative;
-  z-index: 2;
-}
-
-
-#intro-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: var(--bg-color);
-  color: var(--text-primary);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  transition: opacity 1s ease, transform 1s ease, filter 1s ease;
-}
-
-#intro-overlay.fade-out {
-  opacity: 0;
-  pointer-events: none;
-  transform: scale(0.95);
-  filter: blur(2px);
-}
-
-.hello-shuffle {
-  font-size: 2.5rem;
-  font-weight: bold;
-  animation: fade 0.4s ease-in-out;
-}
-
-@keyframes fade {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.3;
-  }
-}
-
-.wave-hand {
-  display: inline-block;
-  margin-left: 0.4rem;
-  animation: wave 1.8s infinite;
-  transform-origin: 70% 70%;
-  font-size: 2.5rem;
-}
-
-@keyframes wave {
-  0% {
-    transform: rotate(0deg);
-  }
-  15% {
-    transform: rotate(14deg);
-  }
-  30% {
-    transform: rotate(-8deg);
-  }
-  40% {
-    transform: rotate(14deg);
-  }
-  50% {
-    transform: rotate(-4deg);
-  }
-  60% {
-    transform: rotate(10deg);
-  }
-  70% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(0deg);
-  }
-}
-
-.navbar {
-  justify-content: space-between;
-  align-items: center;
-  background-color: rgba(1, 22, 39, 0.7);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  width: 100%;
-  height: 3.5rem;
-  position: fixed;
-  z-index: 1000;
-  top: 0;
-  left: 0;
-}
-
-.navbar::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.navbar .container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 100%;
-  max-width: 82rem;
-  overflow: hidden;
-}
-
-.navbar-left,
-.navbar-right {
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
-}
-
-.navbar-left {
-  flex: 1;
-  justify-content: flex-start;
-}
-.navbar-right {
-  flex: 1;
-  justify-content: flex-end;
-}
-
-.navbar-brand {
-  font-size: 1.1rem;
-  font-weight: bold;
-  color: var(--text-primary);
-}
-
-.highlight-brand-letter {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
-}
-
-.navbar-menu,
-.navbar-logo {
-  display: flex;
-  gap: 1rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  font-size: 0.9rem;
-  font-weight: bold;
-}
-
-.navbar-right i {
-  font-size: 1.2rem;
-}
-
-.navbar a {
-  color: var(--text-primary);
-  text-decoration: none;
-}
-
-.navbar a {
-  color: var(--text-primary);
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-.navbar a:hover {
-  color: var(--text-secondary);
-}
-
-.navbar-logo li a i {
-  transition: transform 0.3s ease;
-}
-
-.navbar-logo li a:hover i {
-  transform: scale(1.2);
-}
-
-.navbar-brand a:hover .highlight-brand-letter {
-  color: var(--text-primary);
-}
-
-.home-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: stretch;
-  height: calc(100vh - 3.5rem);
-  padding-top: 0rem;
-  gap: 2rem;
-  padding-top: 3.5rem;
-}
-
-.home-left-side {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  height: 100%;
-  margin-top: 2rem;
-}
-
-.home-right-side {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-}
-
-.intro {
-  margin-top: 2rem;
-  font-size: 2rem;
-}
-
-.intro h1 .intro-name {
-  color: var(--text-secondary);
-}
-
-.blinking-cursor {
-  color: var(--text-primary);
-  animation: blink 1.2s linear infinite;
-  font-size: 3.3rem;
-  transform: scaleX(0.6);
-  display: inline-block;
-}
-
-@keyframes blink {
-  50% {
-    opacity: 0;
-  }
-}
-
-.intro-subheading {
-  margin-top: 0.5rem;
-  font-size: 1.95rem;
-  font-weight: 400;
-  color: var(--text-primary);
-  padding-bottom: 0.5rem;
-}
-
-.intro-description p {
-  margin: 0.5rem 0;
-  font-size: 1.1rem;
-  max-width: 37.5rem;
-  color: var(--text-primary);
-  overflow-wrap: break-word;
-  text-align: justify;
-  line-height: 1.6;
-}
-
-.orbit-wrapper {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1;
-  max-width: 400px;
-  margin: auto;
-  transform: scale(0.8);
-  margin-left: 10rem;
-}
-
-.orbit-circle {
-  position: absolute;
-  border: 2px dashed var(--text-primary);
-  border-radius: 50%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.outer-orbit {
-  width: 100%;
-  height: 100%;
-}
-
-.inner-orbit {
-  width: 50%;
-  height: 50%;
-  opacity: 0.6;
-}
-
-.icon-rotator {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  height: 100%;
-  pointer-events: auto;
-}
-
-.inner-rotator {
-  width: 50%;
-  height: 50%;
-  animation: rotateClockwise 20s linear infinite;
-}
-
-.outer-rotator {
-  animation: rotateCounter 40s linear infinite;
-}
-
-.orbit-icon {
-  position: absolute;
-  width: clamp(60px, 6vw, 70px);
-  height: clamp(60px, 6vw, 70px);
-  opacity: 0;
-  transform: translate(-50%, -50%) scale(0.8);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.orbit-icon.visible {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
-}
-
-.orbit-icon:hover {
-  transform: translate(-50%, -50%) scale(1.3);
-  z-index: 10;
-  filter: invert(64%) sepia(56%) saturate(522%) hue-rotate(125deg)
-    brightness(160%) contrast(100%);
-  cursor: pointer;
-}
-
-.orbit-icon img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  filter: brightness(0) saturate(100%) invert(100%);
-}
-
-.orbit-icon > .icon-inner {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  animation: spinBack 20s linear infinite;
-}
-
-.inner-rotator .orbit-icon > .icon-inner {
-  animation: spinBackInner 10s linear infinite;
-}
-
-@keyframes rotateClockwise {
-  0% {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-  100% {
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
-}
-
-@keyframes rotateCounter {
-  0% {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-  100% {
-    transform: translate(-50%, -50%) rotate(-360deg);
-  }
-}
-
-@keyframes spinBack {
-  0% {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-  100% {
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
-}
-
-@keyframes spinBackInner {
-  0% {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-  100% {
-    transform: translate(-50%, -50%) rotate(-360deg);
-  }
-}
-
-.home-btns {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-top: 0.5rem;
-}
-
-.home-btns .btn,
-.home-btns .home-mail {
-  display: inline-block;
-  width: fit-content;
-  border: 1px solid var(--text-secondary);
-  padding: 15px 40px;
-  border-radius: 4px;
-  color: var(--text-primary);
-  text-decoration: none;
-  transition: background 0.5s;
-  font-weight: bold;
-}
-
-.home-btns .home-mail {
-  padding: 15px 45px;
-}
-
-.btn:hover,
-.home-mail:hover {
-  background-color: var(--text-lightest-secondary);
-}
-
-.page-header {
-  display: flex;
-  align-items: center;
-  gap: 25px;
-}
-
-.page-title {
-  font-size: 3rem;
-  font-weight: bold;
-}
-
-.page-header::after {
-  content: "";
-  flex-grow: 1;
-  height: 1px;
-  background-color: var(--text-lightest-primary);
-}
-
-.special-ch {
-  color: var(--text-secondary);
-  text-decoration: none;
-}
-
-#about {
-  padding: 5rem 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  min-height: 50vh;
-}
-
-.about-content {
-  display: flex;
-  flex-direction: row;
-  gap: 4rem;
-  height: 100%;
-  margin-top: 3rem;
-  line-height: 1.5;
-}
-
-.about-left-side {
-  flex: 1;
-  color: var(--text-primary);
-  min-width: 0;
-  overflow-wrap: break-word;
-  text-align: justify;
-}
-
-.about-right-side {
-  width: 350px;
-  flex-shrink: 0;
-}
-
-.about-right-side img {
-  border-radius: 10px;
-  height: auto;
-  width: 100%;
-  transition: 0.5s;
-}
-
-.about-right-side img:hover {
-  transform: scale(1.05);
-  z-index: 2;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-}
-
-.about-left-side a {
-  color: var(--text-secondary);
-  font-weight: bold;
-  text-decoration: none;
-}
-
-.about-left-side p {
-  font-size: 1.1rem;
-}
-
-.about-first-paragraph {
-  margin-bottom: 1.5rem;
-  line-height: 1.6;
-}
-
-.about-last-paragraph {
-  line-height: 1.6;
-}
-
-.tabs-container {
-  display: flex;
-  gap: 2rem;
-  margin-top: 2rem;
-  padding-bottom: 1.5rem;
-}
-
-.tab-buttons {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  height: 100%;
-}
-
-.tab-button {
-  width: 12rem;
-  background: none;
-  border: none;
-  padding: 0.8rem 12rem 0.8rem 0.5rem;
-  color: var(--text-primary);
-  text-align: left;
-  cursor: pointer;
-  position: relative;
-  transition: color 0.3s;
-  border-radius: 4px;
-  font-size: 1rem;
-  overflow: hidden;
-  z-index: 1;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-.tab-button .ripple {
-  position: absolute;
-  background: var(--text-lightest-secondary);
-  border-radius: 50%;
-  transform: scale(0);
-  animation: ripple-animation 0.9s ease-out;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.5;
-}
-
-@keyframes ripple-animation {
-  to {
-    transform: scale(4);
-    opacity: 0;
-  }
-}
-
-.tab-button.active {
-  font-weight: bold;
-}
-
-.tab-button.focused {
-  color: var(--text-secondary);
-}
-
-.tab-indicator {
-  position: absolute;
-  right: 0;
-  width: 2px;
-  background-color: var(--text-secondary);
-  transition: top 0.3s ease;
-  top: 0;
-  z-index: 1;
-}
-
-.tab-buttons::after {
-  content: "";
-  position: absolute;
-  right: 0px;
-  width: 2px;
-  background-color: rgba(0, 0, 0, 0.7);
-  height: 100%;
-}
-
-.tab-content {
-  flex: 1;
-}
-
-.tab-panel {
-  display: none;
-  margin-left: 2.5rem;
-  margin-top: 0.1rem;
-}
-
-.tab-panel.active {
-  display: block;
-}
-
-.skills-container {
-  display: flex;
-  gap: 4rem;
-}
-
-.skills-column {
-  list-style: none;
-  padding: 0;
-}
-
-.skills-column li {
-  margin-bottom: 1rem;
-}
-
-.skills-column .skill-item {
-  text-decoration: none;
-  color: var(--text-primary);
-  font-size: 0.9rem;
-  font-weight: normal;
-  position: relative;
-  padding-left: 1.5rem;
-}
-
-.skills-column .skill-item::before {
-  content: "▶";
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--text-secondary);
-  font-size: 0.8rem;
-}
-
-.content-title {
-  font-size: 1.3rem;
-  font-weight: bold;
-  padding-bottom: 1rem;
-}
-
-.content-duration {
-  font-size: 0.95rem;
-  color: var(--text-lightest-primary-slightly);
-  padding-bottom: 1rem;
-}
-
-.content-description p {
-  font-size: 0.9rem;
-  position: relative;
-  padding-left: 1.5rem;
-  margin-bottom: 1rem;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
-}
-
-.content-description p::before {
-  content: "▶";
-  position: absolute;
-  left: 0;
-  top: 0.2em;
-  color: var(--text-secondary);
-  font-size: 0.7rem;
-}
-
-.content-description p.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.tabs-container .tab-content {
-  transition: height 0.6s ease;
-}
-
-#experience {
-  padding: 4rem 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  min-height: 50vh;
-}
-
-.experience-content {
-  margin-top: 3rem;
-  line-height: 1.5;
-}
-
-#experience .tab-content {
-  padding-right: 10rem;
-}
-
-#projects {
-  padding: 4rem 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  min-height: 50vh;
-}
-
-.projects-content {
-  margin-top: 3rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-  grid-gap: 0.8rem;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-}
-
-.projects-content .cards {
-  background: var(--bg-color-slightlight);
-  border-radius: 15px;
-  box-sizing: border-box;
-  padding: 1.5rem;
-}
-
-.projects-content h2,
-.projects-content p {
-  margin-bottom: 1.5rem;
-}
-
-.projects-content p {
-  line-height: 1.6;
-}
-
-.card-icons {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.left-card-icon i {
-  font-size: 2rem;
-  color: var(--text-secondary);
-}
-
-.right-card-icon a {
-  font-size: 1.3rem;
-  text-decoration: none;
-  color: var(--text-primary);
-}
-
-.right-card-icon a:hover {
-  color: var(--text-secondary);
-}
-
-.project-images {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  overflow: hidden;
-  border-radius: 12px;
-  margin-bottom: 1.2rem;
-}
-
-.project-images img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: none;
-  border-radius: 12px;
-  transition: opacity 0.5s ease-in-out;
-}
-
-.project-images img:first-child {
-  display: block;
-}
-
-.image-nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 15px;
-  color: var(--text-lightest-secondary-slightly);
-  cursor: pointer;
-  user-select: none;
-  padding: 0 8px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-}
-
-.image-nav:hover {
-  color: var(--text-secondary);
-}
-
-.fade-in-section.cards.active:hover .image-nav {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.left-arrow {
-  left: 1px;
-}
-
-.right-arrow {
-  right: 2px;
-}
-
-.tech-stack {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.3rem;
-}
-
-.tech-stack span {
-  padding: 0.3rem 0.7rem;
-  border-radius: 8px;
-  background: var(--glass-texture);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  border: 0px solid;
-  color: var(--text-primary);
-  font-size: 0.8rem;
-  transition: background 0.3s ease;
-}
-
-.tech-stack span:hover {
-  background: rgba(255, 255, 255, 0.12);
-  color: var(--text-secondary);
-  cursor: pointer;
-}
-
-.fade-in-section,
-.fade-in-section.cards,
-.tab-panel {
-  opacity: 0;
-  margin-top: 50px;
-  transition: opacity 1s ease-out, margin-top 1s ease-out;
-  pointer-events: none;
-}
-
-.fade-in-section.active,
-.fade-in-section.cards.active,
-.tab-panel.fade-in {
-  opacity: 1;
-  margin-top: 0;
-  pointer-events: auto;
-}
-.fade-in-section.cards.active:hover {
-  transform: translateY(0) scale(1.05);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-  background: var(--bg-color);
-  border: 1px solid var(--text-secondary);
-  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-}
-
-#footer {
-  display: flex;
-  align-items: center;
-  padding-top: 4rem;
-}
-
-.credits {
-  padding-bottom: 2rem;
-  text-align: center;
-  width: 100%;
-  font-size: 0.85rem;
-  color: var(--text-lightest-primary-slightly);
-}
-
-#image-popup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-
-#image-popup.hidden {
-  display: none;
-}
-
-#image-popup .popup-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  cursor: pointer;
-}
-
-#image-popup .popup-content {
-  position: relative;
-  max-width: 70vw;
-  max-height: 70vh;
-  display: flex;
-  align-items: center;
-}
-
-#image-popup img {
-  max-width: 100%;
-  max-height: 90vh;
-  display: block;
-  border-radius: 10px;
-  user-select: none;
-}
-
-#image-popup .image-nav {
-  opacity: 1;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: transparent;
-  border-radius: 0;
-  width: auto;
-  height: auto;
-  padding: 8px;
-  cursor: pointer;
-  transition: color 0.2s ease;
-  color: var(--text-lightest-secondary);
-  z-index: 10000;
-  user-select: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  pointer-events: auto;
-}
-
-#image-popup .image-nav:hover {
-  color: var(--text-secondary);
-  background-color: transparent;
-}
-
-#image-popup .left-arrow {
-  left: 5px;
-}
-
-#image-popup .right-arrow {
-  right: 5px;
-}
-
-#image-popup .image-nav i {
-  font-size: 22px !important;
-  pointer-events: none;
-  color: inherit;
-}
-
-.no-scroll {
-  overflow: hidden !important;
-  height: 100vh;
-}
-
-@media only screen and (max-width: 1440px) {
-  .navbar .container {
-    max-width: 75rem;
-  }
-
-  .container {
-    max-width: 65rem;
-  }
-
-  .intro {
-    font-size: 1.8rem;
-  }
-
-  .blinking-cursor {
-    font-size: 3rem;
-  }
-
-  .intro-subheading {
-    font-size: 1.8rem;
-  }
-
-  .intro-description p {
-    font-size: 1rem;
-  }
-
-  .about-left-side p {
-    font-size: 1rem;
-  }
-
-  .content-description p {
-    font-size: 0.9rem;
-  }
-
-  .tab-button {
-    width: 10rem;
-    background: none;
-    border: none;
-    padding: 0.8rem 10rem 0.8rem 0.5rem;
-    color: var(--text-primary);
-    text-align: left;
-    cursor: pointer;
-    position: relative;
-    transition: color 0.3s;
-    border-radius: 4px;
-    font-size: 1rem;
-    overflow: hidden;
-    z-index: 1;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-}
-
-@media only screen and (max-width: 1024px) {
-  .navbar .container {
-    max-width: 60rem;
-  }
-
-  .container {
-    max-width: 55rem;
-  }
-
-  .intro {
-    font-size: 1.6rem;
-  }
-
-  .blinking-cursor {
-    font-size: 2.7rem;
-  }
-
-  .intro-subheading {
-    font-size: 1.6rem;
-  }
-
-  .intro-description p {
-    font-size: 0.9rem;
-  }
-
-  .about-left-side p {
-    font-size: 0.9rem;
-  }
-
-  .tab-button {
-    width: 7rem;
-    background: none;
-    border: none;
-    padding: 0.8rem 7rem 0.8rem 0.5rem;
-    color: var(--text-primary);
-    text-align: left;
-    cursor: pointer;
-    position: relative;
-    transition: color 0.3s;
-    border-radius: 4px;
-    font-size: 1rem;
-    overflow: hidden;
-    z-index: 1;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-
-  .tabs-container {
-    gap: 0rem;
-  }
-}
-
-@media only screen and (max-width: 768px) {
-  .navbar {
-    height: 3rem;
-    padding: 0.5rem 0.5rem;
-    overflow-x: hidden;
-  }
-
-  .navbar .container {
-    flex-direction: row;
-    justify-content: flex-end;
-    max-width: 100%;
-    overflow-x: hidden;
-  }
-
-  .navbar-left {
-    display: none;
-  }
-
-  .navbar-right {
-    justify-content: flex-end;
-    flex: unset;
-    gap: 1rem;
-  }
-
-  .navbar-right i {
-    font-size: 1.1rem;
-  }
-
-  .navbar-menu {
-    display: none;
-  }
-
-  #home {
-    min-height: 100svh;              /* fills first screen on iOS properly */
-  }
-
-  .home-container {
-    height: calc(100svh - 3rem);     /* 3rem = your mobile navbar height */
-    overflow: hidden;
-    flex-direction: column-reverse;
-    padding: 5.5rem 1rem 1rem 1rem;
-    height: auto;
-    gap: 0rem;
-  }
-
-  .home-left-side,
-  .home-right-side {
-    width: 100%;
-    text-align: center;
-    align-items: center;
-  }
-
-
-  .orbit-wrapper {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 1;
-    max-width: 280px; 
-    margin: 0 auto; 
-  }
-
-  .home-left-side {
-    margin-top: 0;
-    padding-top: 0;
-  }
-
-  .intro {
-    font-size: 1.18rem;
-    text-align: center;
-    margin-top: 0;
-  }
-
-  .intro-subheading {
-    font-size: 1.2rem;
-  }
-
-  .intro-description p {
-    font-size: 0.82rem;
-    text-align: center;
-  }
-
-  .blinking-cursor {
-    font-size: 2.2rem;
-  }
-
-  .home-btns {
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-
-  .home-btns .btn,
-  .home-btns .home-mail {
-    padding: 10px 15px;
-    font-size: 0.9rem;
-  }
-
-  .sketch-holder {
-    height: 200px;
-  }
-
-  canvas {
-    height: 100%;
-    width: auto;
-  }
-
-  .sketch-holder canvas {
-    transform: scale(0.9);
-    transform-origin: top center;
-  }
-
-  .page-title {
-    font-size: 2.2rem;
-  }
-
-  #about {
-    padding: 2rem 1rem;
-    flex-direction: column;
-  }
-
-  .about-content {
-    flex-direction: column;
-    gap: 2rem;
-  }
-
-  .about-right-side {
-    width: 100%;
-  }
-
-  .about-left-side p {
-    font-size: 0.95rem;
-  }
-
-  .about-right-side img {
-    display: none;
-  }
-
-  .tabs-container {
-    flex-direction: column;
-  }
-
-  .tab-buttons {
-    display: inline-flex;
-    flex-direction: row;
-    overflow-x: auto;
-    white-space: nowrap;
-    width: auto;
-    position: relative;
-    margin-bottom: 1.5rem;
-  }
-
-  .tab-button {
-    width: auto;
-    padding: 0.5rem 1rem;
-    font-size: 0.85rem;
-    flex-shrink: 0;
-  }
-
-  .tab-indicator {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 2px;
-    width: 0;
-    background-color: var(--text-secondary);
-    transition: left 0.3s ease, width 0.3s ease;
-    z-index: 1;
-  }
-
-  .tab-buttons::after {
-    display: none;
-  }
-
-  .content-title {
-    font-size: 1.2rem;
-  }
-
-  .content-duration {
-    font-size: 0.9rem;
-  }
-
-  .content-description p {
-    font-size: 0.95rem;
-  }
-
-  .tab-panel {
-    margin-left: 0;
-  }
-
-  #experience {
-    padding: 2rem 1rem;
-  }
-
-  #experience .tab-content {
-    padding-right: 0;
-  }
-
-  #projects {
-    padding: 2rem 1rem;
-  }
-
-  #footer {
-    padding-top: 1rem;
-  }
-
-  .credits {
-    font-size: 0.75rem;
-    padding: 2rem 1rem;
-  }
-
-  .image-nav {
-    opacity: 1;
-  }
-
-  #image-popup .popup-content {
-    max-width: 95vw;
-    max-height: 90vh;
-  }
-}
-
-@media only screen and (max-width: 360px) {
-  .intro {
-    font-size: 1rem;
-    text-align: center;
-    margin-top: 1rem;
-  }
-
-  .intro-subheading {
-    font-size: 1.1rem;
-  }
-
-  .intro-description p {
-    font-size: 0.78rem;
-    text-align: center;
-  }
-
-  .blinking-cursor {
-    font-size: 1.8rem;
-  }
-
-  .home-btns {
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-
-  .home-btns .btn,
-  .home-btns .home-mail {
-    padding: 10px 15px;
-    font-size: 0.8rem;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation: none !important;
-    transition: none !important;
-  }
-}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+    <!-- Favicons -->
+  <link rel="icon" href="favicon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="favicon/apple-touch-icon.png">
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      integrity="sha384-/o6I2CkkWC//PSjvWC/eYN7l3xM3tJm8ZzVkCOfp//W05QcE3mlGskpoHB6XqI+B"
+      crossorigin="anonymous"
+    />
+
+    <title>Tarek Hasan</title>
+    <link rel="stylesheet" href="style.css" />
+    <script
+      src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"
+      integrity="sha384-NMn9+T8zIKnDUstqb5le7vdLNSyAgSU9DtEPT/b7ks9NJQpPk4Dc9b1tI8oyzimc"
+      crossorigin="anonymous"
+      defer
+    ></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/p5@1.6.0/lib/p5.min.js"></script> -->
+  </head>
+  <body>
+    <div id="intro-overlay">
+      <div class="hello-shuffle"></div>
+      <span class="wave-hand">👋</span>
+    </div>
+
+    <canvas id="starfield"></canvas>
+    <div class="home-glass-layer"></div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+      <div class="container">
+        <div class="navbar-left">
+          <span class="navbar-brand">
+            <a href="#"
+              ><span class="highlight-brand-letter">T</span>arek Hasan</a
+            ></span
+          >
+          <ul class="navbar-menu">
+            <li><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <!-- <li><a href="#">Blog</a></li> -->
+          </ul>
+        </div>
+        <div class="navbar-right">
+          <ul class="navbar-logo">
+            <li>
+              <a
+                href="https://github.com/tarek-hasan33"
+                target="_blank"
+                rel="noopener noreferrer"
+                ><i class="fab fa-github"></i
+              ></a>
+            </li>
+            <li>
+              <a
+                href="https://www.linkedin.com/in/tarek-hasan33/"
+                target="_blank"
+                rel="noopener noreferrer"
+                ><i class="fa-brands fa-linkedin"></i
+              ></a>
+            </li>
+            <li>
+              <a
+                href="mailto:t.r.hasan33@gmail.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <i class="fas fa-envelope"></i>
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://medium.com/@t.r.hasan33"
+                target="_blank"
+                rel="noopener noreferrer"
+                ><i class="fa-regular fa-pen-to-square"></i
+              ></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- NAVBAR ENDS HERE-->
+
+    <!-- MAIN PAGES -->
+    <div id="content">
+      <!-- HOME PAGE -->
+      <div id="home">
+        <div class="container">
+          <div class="home-container">
+            <div class="fade-in-section home-left-side">
+              <div class="intro">
+                <h1>
+                  hey,
+                  <span class="typed-text"></span
+                  ><span class="blinking-cursor">|</span>
+                </h1>
+              </div>
+              <span class="intro-subheading">
+                <!-- Becoming something slowly -->
+                Learning, Exploring, Creating
+              </span>
+              <div class="intro-description">
+                <p>
+                  I’m a CS student from Dhaka, Bangladesh, interested in AI and
+                  Cybersecurity. Still figuring things out, building what I can,
+                  and hoping to contribute along the way.
+                </p>
+              </div>
+              <div class="home-btns">
+                <a
+                  href="files/resume/Resume_TarekHasan.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn"
+                >
+                  Resume
+                </a>
+
+                <a
+                  href="mailto:t.r.hasan33@gmail.com?subject=Portfolio%20Inquiry&body=Hi%20Tarek%2C%0A%0AI%20came%20across%20your%20portfolio%20and%20would%20like%20to%20connect."
+                  class="home-mail"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <i class="fas fa-envelope"></i> Hello!
+                </a>
+              </div>
+            </div>
+            <div class="home-right-side">
+              <!-- <div class="sketch-holder"></div> -->
+              <div class="orbit-wrapper">
+                <div class="orbit-circle outer-orbit"></div>
+                <div class="icon-rotator outer-rotator">
+                  <div class="orbit-icon">
+                    <img src="images/orbitIcons/react.svg" alt="icon1" />
+                  </div>
+                  <div class="orbit-icon">
+                    <img src="images/orbitIcons/nodedotjs.svg" alt="icon2" />
+                  </div>
+                  <div class="orbit-icon">
+                    <img src="images/orbitIcons/python.svg" alt="icon3" />
+                  </div>
+                  <div class="orbit-icon">
+                    <img src="images/orbitIcons/cplusplus.svg" alt="icon4" />
+                  </div>
+                </div>
+
+                <div class="orbit-circle inner-orbit"></div>
+                <div class="icon-rotator inner-rotator">
+                  <div class="orbit-icon">
+                    <img src="images/orbitIcons/github.svg" alt="icon5" />
+                  </div>
+                  <div class="orbit-icon">
+                    <img src="images/orbitIcons/C.svg" alt="icon6" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HOME PAGE ENDS HERE-->
+
+      <!-- About Section Starts Here-->
+      <div id="about">
+        <div class="container">
+          <div class="fade-in-section about-container">
+            <div class="page-header">
+              <span class="page-title"
+                ><span class="special-ch">|</span> about me</span
+              >
+            </div>
+            <div class="about-content">
+              <div class="about-left-side">
+                <p class="about-first-paragraph">
+                  I’m a <strong>Computer Science</strong> undergraduate at
+                  <a
+                    href="https://www.uiu.ac.bd/about-uiu/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >United International University</a
+                  >, currently working part-time as a Tech Team member at
+                  <a
+                    href="https://www.minutei.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Minutei</a
+                  >, where I contribute to product development. I’m also a
+                  Research Assistant at
+                  <a
+                    href="https://amirl.org/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >AMIR Lab</a
+                  >, focusing on Explainable AI, NLP, and LLM hallucinations.
+                </p>
+
+                <p>Know more about my skillsets and educational background:</p>
+                <div class="tabs-container">
+                  <div class="tab-buttons">
+                    <button class="tab-button active" data-tab="skills">
+                      TECH STACK
+                    </button>
+                    <button class="tab-button" data-tab="education">
+                      EDUCATION
+                    </button>
+                    <div class="tab-indicator"></div>
+                  </div>
+                  <div class="fade-in-section tab-content">
+                    <div class="tab-panel active">
+                      <div class="skills-container content-description">
+                        <ul class="skills-column">
+                          <li><span class="skill-item">Java</span></li>
+                          <li><span class="skill-item">C++</span></li>
+                          <li>
+                            <span class="skill-item">JavaScript ES6+</span>
+                          </li>
+                        </ul>
+                        <ul class="skills-column">
+                          <li><span class="skill-item">Git</span></li>
+                          <li><span class="skill-item">MySQL</span></li>
+                          <!-- <li><a href="#">Javascript ES6+</a></li> -->
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="tab-panel">
+                      <div class="content-title">
+                        BSc in Computer Science and Engineering
+                        <span class="special-ch"
+                          >@United International University</span
+                        >
+                      </div>
+                      <div class="content-duration">OCT 2022 - ONGOING</div>
+                      <div class="content-description">
+                        <p>
+                          Bachelor’s student in Computer Science and Engineering
+                          with a focus on Data Structures, Databases, Networks,
+                          Security, and AI/ML.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <p class="about-last-paragraph">
+                  Outside of studies and personal projects, I love football,
+                  Formula 1, video games, and getting lost in
+                  <a
+                    href="https://tarekhasan.notion.site/Book-Collection-468100d225c34803bc707d3ef9cbb29c"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    books.
+                  </a>
+                </p>
+              </div>
+
+              <div class="fade-in-section about-right-side">
+                <img alt="Tarek Hasan" src="images/self.jpg" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- About Section ends here-->
+
+      <!-- Experience Section Starts Here -->
+      <div id="experience">
+        <div class="container">
+          <div class="fade-in-section experience-container">
+            <div class="page-header">
+              <span class="page-title"
+                ><span class="special-ch">|</span> experience</span
+              >
+            </div>
+          </div>
+          <div class="experience-content">
+            <div class="tabs-container">
+              <div class="tab-buttons">
+                <button class="tab-button active" data-tab="minutei">
+                  MINUTEI
+                </button>
+                <button class="tab-button" data-tab="amirlab">AMIR LAB</button>
+                <div class="tab-indicator"></div>
+              </div>
+              <div class="fade-in-section tab-content">
+                <div class="tab-panel active">
+                  <div class="content-title">
+                    Tech Team Member (Part-time)
+                    <span class="special-ch">@Minutei</span>
+                  </div>
+                  <div class="content-duration">MAY 2025 - ONGOING</div>
+                  <div class="content-description">
+                    <p>
+                      Working as a part-time Tech Team Member at Minutei,
+                      contributing directly to product development by supporting
+                      feature implementation, testing, and iterative
+                      improvements across the platform.
+                    </p>
+                    <p>
+                      Actively involved in the development lifecycle,
+                      collaborating with product and cross-functional teams to
+                      refine requirements, resolve technical issues, and enhance
+                      user-facing functionality.
+                    </p>
+                    <p>
+                      Assisting with quality assurance, deployment checks, and
+                      ongoing maintenance of <b>minutei.com</b>, helping ensure
+                      stable releases and a smooth, user-focused product
+                      experience.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="tab-panel">
+                  <div class="content-title">
+                    Research Assistant
+                    <span class="special-ch"
+                      >@Advanced Machine Intelligence Research Lab</span
+                    >
+                  </div>
+
+                  <div class="content-duration">FEBRUARY 2025 - ONGOING</div>
+                  <div class="content-description">
+                    <p>
+                      Currently researching NLP with a focus on LLM
+                      hallucinations, exploring why they occur and how to reduce
+                      them. Investigating the behavior of large language models
+                      to improve output reliability and factual consistency.
+                    </p>
+                    <p>
+                      Working on AI transparency through Explainable AI.
+                      Developing methods to make model decisions more
+                      interpretable and co-authoring a research paper on these
+                      topics with my team.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Experience Section Ends Here -->
+
+      <!-- Project Section Starts Here -->
+      <div id="projects">
+        <div class="container">
+          <div class="fade-in-section projects-container">
+            <div class="page-header">
+              <span class="page-title"
+                ><span class="special-ch">|</span> projects</span
+              >
+            </div>
+          </div>
+          <div class="projects-content">
+            <div class="fade-in-section cards">
+              <div class="card-icons">
+                <div class="left-card-icon">
+                  <i class="fa-solid fa-diagram-project"></i>
+                </div>
+                <div class="right-card-icon">
+                  <a href="https://github.com/tarek-hasan33/Personal_Portfolio"
+                    ><i class="fa-brands fa-github"></i
+                  ></a>
+                </div>
+              </div>
+              <div class="project-images">
+                <img src="images/project_images/portfolio/1.png" alt="img1" />
+                <img src="images/project_images/portfolio/2.png" alt="img2" />
+                <img src="images/project_images/portfolio/3.png" alt="img3" />
+                <div class="image-nav left-arrow">
+                  <i class="fa-solid fa-chevron-left"></i>
+                </div>
+                <div class="image-nav right-arrow">
+                  <i class="fa-solid fa-chevron-right"></i>
+                </div>
+              </div>
+
+              <h2>Personal Portfolio</h2>
+              <p>
+                A minimalistic personal portfolio site to share my journey,
+                projects, and regular blogs.
+              </p>
+              <div class="tech-stack">
+                <span>HTML</span>
+                <span>CSS</span>
+                <span>JavaScript</span>
+              </div>
+            </div>
+            <div class="fade-in-section cards">
+              <div class="card-icons">
+                <div class="left-card-icon">
+                  <i class="fa-solid fa-diagram-project"></i>
+                </div>
+                <div class="right-card-icon">
+                  <a href="https://github.com/tarek-hasan33/Personal_Portfolio"
+                    ><i class="fa-brands fa-github"></i
+                  ></a>
+                </div>
+              </div>
+              <div class="project-images">
+                <img
+                  src="images/project_images/comingSoon/comingSoon.jpg"
+                  alt="img1"
+                />
+                <div class="image-nav left-arrow">
+                  <i class="fa-solid fa-chevron-left"></i>
+                </div>
+                <div class="image-nav right-arrow">
+                  <i class="fa-solid fa-chevron-right"></i>
+                </div>
+              </div>
+              <h2>Coming Soon</h2>
+              <p>
+                Will add new projects I’m working on after finishing them.
+                Keeping this card here just for the visual.
+              </p>
+              <div class="tech-stack">
+                <span>Demo Stack</span>
+              </div>
+            </div>
+            <div class="fade-in-section cards">
+              <div class="card-icons">
+                <div class="left-card-icon">
+                  <i class="fa-solid fa-diagram-project"></i>
+                </div>
+                <div class="right-card-icon">
+                  <a href="https://github.com/tarek-hasan33/Personal_Portfolio"
+                    ><i class="fa-brands fa-github"></i
+                  ></a>
+                </div>
+              </div>
+              <div class="project-images">
+                <img
+                  src="images/project_images/comingSoon/comingSoon.jpg"
+                  alt="img1"
+                />
+                <div class="image-nav left-arrow">
+                  <i class="fa-solid fa-chevron-left"></i>
+                </div>
+                <div class="image-nav right-arrow">
+                  <i class="fa-solid fa-chevron-right"></i>
+                </div>
+              </div>
+              <h2>Coming Soon</h2>
+              <p>
+                Will add new projects I’m working on after finishing them.
+                Keeping this card here just for the visual.
+              </p>
+              <div class="tech-stack">
+                <span>Demo Stack</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="footer">
+        <div class="fade-in-section credits">
+          <div>Built and designed by Tarek Hasan</div>
+          <div>All rights reserved. &copy</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="image-popup" class="hidden">
+      <div class="popup-overlay"></div>
+      <div class="popup-content">
+        <div class="image-nav left-arrow">
+          <i class="fa-solid fa-chevron-left"></i>
+        </div>
+        <img
+          src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
+          alt="Popup Image"
+        />
+        <div class="image-nav right-arrow">
+          <i class="fa-solid fa-chevron-right"></i>
+        </div>
+      </div>
+    </div>
+
+    <script src="main.js"></script>
+  </body>
+</html>
