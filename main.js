@@ -319,7 +319,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }
 
-
       // ---- rockets update + smoke ----
       for (let i = rockets.length - 1; i >= 0; i--) {
         const r = rockets[i];
@@ -376,13 +375,32 @@ document.addEventListener("DOMContentLoaded", function () {
       };
     }
 
-    resize();
-    window.addEventListener(
-      "resize",
-      debounce(() => {
-        resize();
-      }, 150)
-    );
+    // --- stable resize handling (prevents mobile scroll resets) ---
+    let lastW = 0;
+    let lastH = 0;
+
+    function safeResize() {
+      const newW = window.innerWidth;
+      const newH = window.visualViewport?.height || window.innerHeight;
+
+      const widthChanged = newW !== lastW;
+      const heightChangedALot = Math.abs(newH - lastH) > 120;
+
+      // Ignore mobile scroll-induced resizes
+      if (!widthChanged && !heightChangedALot) return;
+
+      lastW = newW;
+      lastH = newH;
+
+      resize(); 
+    }
+
+    // initial setup
+    safeResize();
+
+    // listen for real resizes only
+    window.addEventListener("resize", debounce(safeResize, 150));
+    window.addEventListener("orientationchange", debounce(safeResize, 150));
 
     requestAnimationFrame(draw);
   })();
