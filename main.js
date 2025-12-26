@@ -247,21 +247,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function drawRocket(r) {
       const size = 28; // small & subtle
-
+      
       // Detect iOS devices
-      const isIOS =
-        /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+      
       ctx.save();
       ctx.translate(r.x, r.y);
-
-      // iOS needs 90-degree counter-clockwise adjustment
+      
+      // iOS needs 180-degree adjustment (PI radians)
       if (isIOS) {
-        ctx.rotate(r.angle - Math.PI / 2);
+        ctx.rotate(r.angle + Math.PI);
       } else {
         ctx.rotate(r.angle + Math.PI / 2);
       }
-
+      
       ctx.globalAlpha = 0.85;
 
       ctx.drawImage(rocketImg, -size / 2, -size / 2, size, size);
