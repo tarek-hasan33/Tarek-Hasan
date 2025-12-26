@@ -254,9 +254,9 @@ document.addEventListener("DOMContentLoaded", function () {
       ctx.save();
       ctx.translate(r.x, r.y);
       
-      // iOS needs 180-degree adjustment (PI radians)
+      // iOS needs fine-tuned adjustment
       if (isIOS) {
-        ctx.rotate(r.angle + Math.PI);
+        ctx.rotate(r.angle + Math.PI - (80 * Math.PI / 180)); // 80 degrees left
       } else {
         ctx.rotate(r.angle + Math.PI / 2);
       }
