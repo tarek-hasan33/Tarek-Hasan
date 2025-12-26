@@ -256,7 +256,7 @@ document.addEventListener("DOMContentLoaded", function () {
       
       // iOS needs fine-tuned adjustment
       if (isIOS) {
-        ctx.rotate(r.angle + Math.PI - (110 * Math.PI / 180)); // 80 degrees left
+        ctx.rotate(r.angle + Math.PI - (130 * Math.PI / 180)); // 80 degrees left
       } else {
         ctx.rotate(r.angle + Math.PI / 2);
       }
