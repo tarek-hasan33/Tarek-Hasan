@@ -246,24 +246,23 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function drawRocket(r) {
-      const size = 28; // small & subtle
-
+      const size = 28;
       ctx.save();
       ctx.translate(r.x, r.y);
-      ctx.rotate(r.angle + Math.PI / 2); // <-- key line
-      ctx.globalAlpha = 0.85;
 
+      const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+      if (!isIOS) {
+        ctx.rotate(r.angle + Math.PI / 2);
+      } else {
+        ctx.rotate(r.angle);
+      }
+
+      ctx.globalAlpha = 0.85;
       ctx.drawImage(rocketImg, -size / 2, -size / 2, size, size);
 
       ctx.restore();
       ctx.globalAlpha = 1;
     }
-
-    // Not too frequent
-    setInterval(() => {
-      if (!running) return;
-      if (Math.random() < (isMobile ? 0.35 : 0.5)) spawnShootingStar();
-    }, 1100);
 
     // Pause only when tab is hidden (NOT when scrolling)
     function onVisibility() {
@@ -392,7 +391,7 @@ document.addEventListener("DOMContentLoaded", function () {
       lastW = newW;
       lastH = newH;
 
-      resize(); 
+      resize();
     }
 
     // initial setup
