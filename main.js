@@ -177,6 +177,11 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
 
+    setInterval(() => {
+      if (!running) return;
+      if (Math.random() < (isMobile ? 0.35 : 0.5)) spawnShootingStar();
+    }, 1100);
+
     function spawnRocket() {
       if (rockets.length >= 1) return; // only one at a time
 
