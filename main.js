@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     setTimeout(() => {
       overlay.style.display = "none";
-      initMainAnimations(); //main animation initiation
+      initMainAnimations();
     }, 300);
   }, 1800);
 
@@ -42,7 +42,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const rocketImg = new Image();
     rocketImg.src = "images/rocket/rocket.svg";
 
-    // Offscreen cache for static stars
     const starCache = document.createElement("canvas");
     const sctx = starCache.getContext("2d", { alpha: true });
 
@@ -50,12 +49,11 @@ document.addEventListener("DOMContentLoaded", function () {
       h = 0,
       dpr = 1;
 
-    // Performance knobs
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    const STAR_COUNT = isMobile ? 900 : 1400; // lower on mobile
-    const GLOW_RATIO = isMobile ? 0.05 : 0.07; // few glowy ones
-    const MAX_SHOOTING = isMobile ? 1 : 2; // cap simultaneous streaks
-    const TARGET_FPS = 30; // stars don’t need 60fps
+    const STAR_COUNT = isMobile ? 900 : 1400; 
+    const GLOW_RATIO = isMobile ? 0.05 : 0.07; 
+    const MAX_SHOOTING = isMobile ? 1 : 2; 
+    const TARGET_FPS = 30; 
     const FRAME_TIME = 1000 / TARGET_FPS;
 
     const stars = [];
@@ -85,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
       sctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
       buildStars();
-      renderStarCache(); // draw static stars once
+      renderStarCache(); 
     }
 
     function buildStars() {
@@ -95,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function () {
         stars.push({
           x: Math.random() * w,
           y: Math.random() * h,
-          r: glow ? rand(0.6, 1.2) : rand(0.3, 0.9), // tiny dots
+          r: glow ? rand(0.6, 1.2) : rand(0.3, 0.9),
           a: glow ? rand(0.25, 0.85) : rand(0.12, 0.55),
           glow,
         });
@@ -105,7 +103,6 @@ document.addEventListener("DOMContentLoaded", function () {
     function renderStarCache() {
       sctx.clearRect(0, 0, w, h);
 
-      // subtle depth tint
       const bg = sctx.createRadialGradient(
         w * 0.5,
         h * 0.2,
@@ -135,34 +132,25 @@ document.addEventListener("DOMContentLoaded", function () {
     function spawnShootingStar() {
       if (shooting.length >= MAX_SHOOTING) return;
 
-      // Choose spawn edge
       const r = Math.random();
       let startX, startY, angle;
 
       if (r < 0.55) {
-        // TOP (same idea as before)
         startX = rand(0, w);
         startY = -60;
 
-        // Mostly downward with small left/right variance
         angle = rand(Math.PI * 0.35, Math.PI * 0.65);
       } else if (r < 0.775) {
-        // LEFT
         startX = -60;
-        startY = rand(0, h); // full height for better spread
-
-        // Aim to the right-ish (inward)
+        startY = rand(0, h);
         angle = rand(-Math.PI * 0.15, Math.PI * 0.15);
       } else {
-        // RIGHT
         startX = w + 60;
-        startY = rand(0, h); // full height for better spread
+        startY = rand(0, h); 
 
-        // Aim to the left-ish (inward)
         angle = rand(Math.PI - Math.PI * 0.15, Math.PI + Math.PI * 0.15);
       }
 
-      // Slightly slower (adjust to taste)
       const speed = rand(isMobile ? 8 : 10, isMobile ? 14 : 18);
 
       shooting.push({
@@ -183,9 +171,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 1100);
 
     function spawnRocket() {
-      if (rockets.length >= 1) return; // only one at a time
+      if (rockets.length >= 1) return; 
 
-      // spawn from random edge
       const edge = Math.floor(Math.random() * 4);
       let x, y;
 
@@ -221,16 +208,15 @@ document.addEventListener("DOMContentLoaded", function () {
         y,
         vx: (dx / mag) * speed,
         vy: (dy / mag) * speed,
-        angle: Math.atan2(dy, dx), // movement direction
+        angle: Math.atan2(dy, dx), 
         life: 0,
         maxLife: 1000,
       });
     }
 
-    // Rare rocket spawns (random)
     setInterval(() => {
       if (!running) return;
-      if (Math.random() < 0.4) spawnRocket(); // 20% chance every 5s = ~25s average
+      if (Math.random() < 0.4) spawnRocket();
     }, 5000);
 
     function emitSmoke(x, y, vx, vy) {
@@ -251,17 +237,15 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function drawRocket(r) {
-      const size = 28; // small & subtle
+      const size = 28; 
       
-      // Detect iOS devices
       const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
       
       ctx.save();
       ctx.translate(r.x, r.y);
       
-      // iOS needs fine-tuned adjustment
       if (isIOS) {
-        ctx.rotate(r.angle + Math.PI - (140 * Math.PI / 180)); // 140 degrees left
+        ctx.rotate(r.angle + Math.PI - (140 * Math.PI / 180));
       } else {
         ctx.rotate(r.angle + Math.PI / 2);
       }
@@ -274,7 +258,6 @@ document.addEventListener("DOMContentLoaded", function () {
       ctx.globalAlpha = 1;
     }
 
-    // Pause only when tab is hidden (NOT when scrolling)
     function onVisibility() {
       running = !document.hidden;
     }
@@ -285,14 +268,12 @@ document.addEventListener("DOMContentLoaded", function () {
       requestAnimationFrame(draw);
       if (!running) return;
 
-      if (ts - lastFrame < FRAME_TIME) return; // throttle to ~30fps
+      if (ts - lastFrame < FRAME_TIME) return; 
       lastFrame = ts;
 
-      // draw cached star background
       ctx.clearRect(0, 0, w, h);
       ctx.drawImage(starCache, 0, 0, w, h);
 
-      // shooting stars
       for (let i = shooting.length - 1; i >= 0; i--) {
         const sh = shooting[i];
         sh.x += sh.vx;
@@ -328,14 +309,12 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }
 
-      // ---- rockets update + smoke ----
       for (let i = rockets.length - 1; i >= 0; i--) {
         const r = rockets[i];
         r.x += r.vx;
         r.y += r.vy;
         r.life++;
 
-        // smoke comes from behind rocket
         emitSmoke(
           r.x - Math.cos(r.angle) * 14,
           r.y - Math.sin(r.angle) * 14,
@@ -354,7 +333,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }
 
-      // ---- smoke draw ----
       for (let i = smoke.length - 1; i >= 0; i--) {
         const p = smoke[i];
         p.x += p.vx;
@@ -372,7 +350,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       ctx.globalAlpha = 1;
 
-      // ---- rocket draw ----
       for (const r of rockets) drawRocket(r);
     }
 
@@ -384,7 +361,6 @@ document.addEventListener("DOMContentLoaded", function () {
       };
     }
 
-    // --- stable resize handling (prevents mobile scroll resets) ---
     let lastW = 0;
     let lastH = 0;
 
@@ -395,7 +371,6 @@ document.addEventListener("DOMContentLoaded", function () {
       const widthChanged = newW !== lastW;
       const heightChangedALot = Math.abs(newH - lastH) > 120;
 
-      // Ignore mobile scroll-induced resizes
       if (!widthChanged && !heightChangedALot) return;
 
       lastW = newW;
@@ -404,19 +379,15 @@ document.addEventListener("DOMContentLoaded", function () {
       resize();
     }
 
-    // initial setup
     safeResize();
 
-    // listen for real resizes only
     window.addEventListener("resize", debounce(safeResize, 150));
     window.addEventListener("orientationchange", debounce(safeResize, 150));
 
     requestAnimationFrame(draw);
   })();
 
-  // MAIN ANIMATION
   function initMainAnimations() {
-    //Typed.js
     if (window.Typed) {
       new Typed(".typed-text", {
         strings: [" <span class='intro-name'>tarek</span> here."],
@@ -426,7 +397,6 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
 
-    //Fade-in on scroll
     const fadeSections = document.querySelectorAll(".fade-in-section");
     const observer = new IntersectionObserver(
       (entries, observer) => {
@@ -447,7 +417,6 @@ document.addEventListener("DOMContentLoaded", function () {
       observer.observe(section);
     });
 
-    //Tabbed content
     const tabContainers = document.querySelectorAll(".tabs-container");
     tabContainers.forEach((container) => {
       const buttons = container.querySelectorAll(".tab-button");
@@ -477,7 +446,6 @@ document.addEventListener("DOMContentLoaded", function () {
           }
         });
 
-        // Buttons: update active and focused states
         buttons.forEach((btn, i) => {
           btn.classList.remove("active", "focused");
           if (i === index) {
@@ -491,7 +459,6 @@ document.addEventListener("DOMContentLoaded", function () {
           if (button) {
             const isMobile = window.innerWidth <= 768;
             if (isMobile) {
-              // Horizontal indicator below button
               const containerTabs = container.querySelector(".tab-buttons");
               const scrollLeft = containerTabs.scrollLeft || 0;
               const leftPos = button.offsetLeft - scrollLeft;
@@ -512,15 +479,11 @@ document.addEventListener("DOMContentLoaded", function () {
             }
           }
         }
-
-        // Adjust tab content height to active panel height
         const tabContent = container.querySelector(".tab-content");
         const activePanel = container.querySelector(".tab-panel.active");
         if (tabContent && activePanel) {
           tabContent.style.height = activePanel.offsetHeight + 5 + "px";
         }
-
-        // Save active index
         activeIndex = index;
       }
 
@@ -552,7 +515,6 @@ document.addEventListener("DOMContentLoaded", function () {
       activateTab(0, false);
     });
 
-    //Orbit icon positioning with smooth entry
     function positionOrbitIcons(rotatorSelector) {
       const rotator = document.querySelector(rotatorSelector);
       if (!rotator) return;
@@ -568,8 +530,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         icon.style.left = `${x}px`;
         icon.style.top = `${y}px`;
-
-        // Only wrap if not already wrapped
         if (!icon.querySelector(".icon-inner")) {
           const img = icon.querySelector("img");
           if (img) {
@@ -580,8 +540,6 @@ document.addEventListener("DOMContentLoaded", function () {
             icon.appendChild(wrapper);
           }
         }
-
-        // Smooth fade-in via class after positioning
         requestAnimationFrame(() => {
           icon.classList.add("visible");
         });
@@ -591,15 +549,89 @@ document.addEventListener("DOMContentLoaded", function () {
     positionOrbitIcons(".outer-rotator");
     positionOrbitIcons(".inner-rotator");
 
+    function addOrbitDrag(dragSelector, rotatorSelector) {
+    const dragWrap = document.querySelector(dragSelector);
+    const rotator = document.querySelector(rotatorSelector);
+    if (!dragWrap || !rotator) return;
+
+    let dragging = false;
+    let startAngle = 0;
+    let startRotation = 0;
+    let currentRotation = 0;
+
+    function getCenter(el) {
+      const r = el.getBoundingClientRect();
+      return { cx: r.left + r.width / 2, cy: r.top + r.height / 2 };
+    }
+
+    function angleFromPoint(x, y, cx, cy) {
+      return Math.atan2(y - cy, x - cx) * (180 / Math.PI);
+    }
+
+    function pointerXY(e) {
+      if (e.touches && e.touches[0]) {
+        return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      }
+      return { x: e.clientX, y: e.clientY };
+    }
+
+    function onDown(e) {
+      if (!e.target.closest(".orbit-icon")) return;
+
+      dragging = true;
+      rotator.style.animationPlayState = "paused";
+
+      const { cx, cy } = getCenter(dragWrap);
+      const p = pointerXY(e);
+
+      startAngle = angleFromPoint(p.x, p.y, cx, cy);
+      startRotation = currentRotation;
+
+      e.preventDefault();
+    }
+
+    function onMove(e) {
+      if (!dragging) return;
+
+      const { cx, cy } = getCenter(dragWrap);
+      const p = pointerXY(e);
+
+      const a = angleFromPoint(p.x, p.y, cx, cy);
+      const delta = a - startAngle;
+
+      currentRotation = startRotation + delta;
+      dragWrap.style.transform = `translate(-50%, -50%) rotate(${currentRotation}deg)`;
+
+      e.preventDefault();
+    }
+
+    function onUp() {
+      if (!dragging) return;
+      dragging = false;
+
+      rotator.style.animationPlayState = "running";
+    }
+
+    dragWrap.addEventListener("mousedown", onDown);
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onUp);
+
+    dragWrap.addEventListener("touchstart", onDown, { passive: false });
+    window.addEventListener("touchmove", onMove, { passive: false });
+    window.addEventListener("touchend", onUp);
+  }
+
+  addOrbitDrag(".outer-drag", ".outer-rotator");
+  addOrbitDrag(".inner-drag", ".inner-rotator");
+
+
+
     window.addEventListener("resize", () => {
       positionOrbitIcons(".outer-rotator");
       positionOrbitIcons(".inner-rotator");
     });
 
-    //Initialize auto slide on hover
     initAutoSlides();
-
-    // POPUP IMAGE MODAL WITH NAVIGATION (for HTML-defined popup)
     const popup = document.getElementById("image-popup");
     const popupImg = popup.querySelector("img");
     const popupOverlay = popup.querySelector(".popup-overlay");
@@ -610,8 +642,6 @@ document.addEventListener("DOMContentLoaded", function () {
     let currentIndex = 0;
     let touchStartX = 0;
     let touchEndX = 0;
-
-    // Handler to prevent touch scroll on mobile
     function preventTouchScroll(e) {
       e.preventDefault();
     }
@@ -630,7 +660,6 @@ document.addEventListener("DOMContentLoaded", function () {
           document.body.style.overflow = "hidden";
           document.documentElement.style.overflow = "hidden";
 
-          // Disable touch scroll on mobile
           document.addEventListener("touchmove", preventTouchScroll, {
             passive: false,
           });
@@ -667,11 +696,9 @@ document.addEventListener("DOMContentLoaded", function () {
       document.body.style.overflow = "";
       document.documentElement.style.overflow = "";
 
-      // Re-enable touch scroll on mobile
       document.removeEventListener("touchmove", preventTouchScroll);
     });
 
-    // Keyboard navigation and Escape to close
     document.addEventListener("keydown", (e) => {
       if (popup.classList.contains("hidden")) return;
 
@@ -690,20 +717,18 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     function handleGesture() {
-      const swipeThreshold = 50; // minimum px to consider it a swipe
+      const swipeThreshold = 50;
       const deltaX = touchEndX - touchStartX;
 
       if (Math.abs(deltaX) > swipeThreshold) {
         if (deltaX < 0) {
-          showPopupImage(currentIndex + 1); // swipe left
+          showPopupImage(currentIndex + 1); 
         } else {
-          showPopupImage(currentIndex - 1); // swipe right
+          showPopupImage(currentIndex - 1);
         }
       }
     }
   }
-
-  //Auto slide function for project image sliders on hover
   function initAutoSlides() {
     const cards = document.querySelectorAll(".fade-in-section.cards");
 
@@ -766,7 +791,6 @@ document.addEventListener("DOMContentLoaded", function () {
           showImage(currentIndex);
         });
       }
-      //Initial state: show first image
       showImage(currentIndex);
     });
   }

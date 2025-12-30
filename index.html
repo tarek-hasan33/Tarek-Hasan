@@ -30,7 +30,6 @@
       crossorigin="anonymous"
       defer
     ></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/p5@1.6.0/lib/p5.min.js"></script> -->
   </head>
   <body>
     <div id="intro-overlay">
@@ -148,32 +147,41 @@
               <!-- <div class="sketch-holder"></div> -->
               <div class="orbit-wrapper">
                 <div class="orbit-circle outer-orbit"></div>
-                <div class="icon-rotator outer-rotator">
-                  <div class="orbit-icon">
-                    <img src="images/orbitIcons/react.svg" alt="icon1" />
-                  </div>
-                  <div class="orbit-icon">
-                    <img src="images/orbitIcons/nodedotjs.svg" alt="icon2" />
-                  </div>
-                  <div class="orbit-icon">
-                    <img src="images/orbitIcons/python.svg" alt="icon3" />
-                  </div>
-                  <div class="orbit-icon">
-                    <img src="images/orbitIcons/cplusplus.svg" alt="icon4" />
+
+                <!-- OUTER: drag wrapper -->
+                <div class="orbit-drag outer-drag">
+                  <div class="icon-rotator outer-rotator">
+                    <div class="orbit-icon">
+                      <img src="images/orbitIcons/react.svg" alt="icon1" />
+                    </div>
+                    <div class="orbit-icon">
+                      <img src="images/orbitIcons/nodedotjs.svg" alt="icon2" />
+                    </div>
+                    <div class="orbit-icon">
+                      <img src="images/orbitIcons/python.svg" alt="icon3" />
+                    </div>
+                    <div class="orbit-icon">
+                      <img src="images/orbitIcons/cplusplus.svg" alt="icon4" />
+                    </div>
                   </div>
                 </div>
 
                 <div class="orbit-circle inner-orbit"></div>
-                <div class="icon-rotator inner-rotator">
-                  <div class="orbit-icon">
-                    <img src="images/orbitIcons/github.svg" alt="icon5" />
-                  </div>
-                  <div class="orbit-icon">
-                    <img src="images/orbitIcons/C.svg" alt="icon6" />
+
+                <!-- INNER: drag wrapper -->
+                <div class="orbit-drag inner-drag">
+                  <div class="icon-rotator inner-rotator">
+                    <div class="orbit-icon">
+                      <img src="images/orbitIcons/github.svg" alt="icon5" />
+                    </div>
+                    <div class="orbit-icon">
+                      <img src="images/orbitIcons/C.svg" alt="icon6" />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </div>

@@ -336,8 +336,8 @@ body {
 }
 
 .inner-rotator {
-  width: 50%;
-  height: 50%;
+  width: 100%;
+  height: 100%;
   animation: rotateClockwise 20s linear infinite;
 }
 
@@ -420,6 +420,22 @@ body {
   100% {
     transform: translate(-50%, -50%) rotate(-360deg);
   }
+}
+
+.orbit-drag {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%) rotate(0deg);
+  transform-origin: center;
+  pointer-events: auto;
+}
+
+.inner-drag {
+  width: 50%;
+  height: 50%;
 }
 
 .home-btns {
